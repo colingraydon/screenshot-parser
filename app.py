@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import NW, filedialog, Text, Label
 import pyautogui
 import pytesseract
+import pyperclip
 
 
 root = tk.Tk()
@@ -26,19 +27,20 @@ def take_screenshot():
     timer_left = (width / 2) - 50
     timer_right = (width / 2) + 50
     timer_top = 50
-    timer_bot = 350
+    timer_bot = 150
 
     screenshot_cropped = screenshot.crop((timer_left, timer_top, timer_right, timer_bot))
 
     #these lines will save the screenshot if needed later
-    # save_path = filedialog.asksaveasfilename()
-    # screenshot_cropped.save(save_path+"screenshottest.png")
+    save_path = filedialog.asksaveasfilename()
+    screenshot_cropped.save(save_path+"screenshottest.png")
 
     #these lines would put the screenshot onto the canvas
     # tk_image = tk.PhotoImage(screenshot_cropped)
     # canvas.create_image(10,10, image=tk_image, anchor=tk.NW)
 
     text = pytesseract.image_to_string(screenshot_cropped)
+    pyperclip.copy(text)
     print(text)
     #return text
 
@@ -60,9 +62,9 @@ def add_text(s):
 
 roshTimer = tk.Button(root, text="Rosh", command = take_screenshot, padx=10, pady=5 , fg="#222222")
 roshTimer.pack(side = "left", anchor="e", expand=True)
-buyback = tk.Button(root, text="Buyback", command = take_screenshot, padx=10, pady=5 , fg="#222222")
-buyback.pack(side="left", anchor="w", expand=True)
-clear = tk.Button(root, text="Clear", command = take_screenshot, padx=10, pady=5 , fg="#222222")
-clear.pack(side="left", anchor="w", expand=True)
+# buyback = tk.Button(root, text="Buyback", command = take_screenshot, padx=10, pady=5 , fg="#222222")
+# buyback.pack(side="left", anchor="w", expand=True)
+# clear = tk.Button(root, text="Clear", command = take_screenshot, padx=10, pady=5 , fg="#222222")
+# clear.pack(side="left", anchor="w", expand=True)
 
 root.mainloop()
